@@ -13,8 +13,48 @@ import cx from 'classnames';
 import s from './Home.css';
 import Post from './../../components/Post';
 import PostForm from './PostForm';
+import fetch from '../../core/fetch';
+
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux'
+import { reducer as reduxFormReducer } from 'redux-form';
 
 const title = 'My awesome website';
+
+const reducer = combineReducers({
+  form: reduxFormReducer // mounted under "form"
+});
+
+function createReduxStore(){
+  if(typeof window !== 'undefined') {
+    return (window.devToolsExtension ? window.devToolsExtension()(createStore) : createStore)(reducer);
+  } else {
+    return createStore(reducer);
+  }
+}
+const store = createReduxStore();
+
+const createPost = async function createPost(values) {
+  const resp = await fetch('/graphql', {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: 'mutation Mutex { postMutations(title: "'+values.title+'", contentShort: "'+values.contentShort+'", author: "'+values.author+'") { title contentShort author content } }',
+    }),
+    credentials: 'include',
+  });
+  const { data } = await resp.json();
+  console.log(data);
+};
+
+const showResults = (values, event) => {
+  createPost(values);
+  event.preventDefault();
+};
+
 
 function Home({ posts }, context) {
   context.setTitle(title);
@@ -68,7 +108,9 @@ function Home({ posts }, context) {
             </div>
             <div className={cx(s.column)}>
               <aside className={s.menu}>
-                <PostForm />
+                <Provider store={store}>
+                  <PostForm onSubmit={showResults} />
+                </Provider>
                 <ul className={s.menuList}>
                   <li><a href="#">Home</a></li>
                   <li><a href="#">About</a></li>

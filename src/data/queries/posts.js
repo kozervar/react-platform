@@ -19,9 +19,8 @@ let items = [];
 let lastFetchTask;
 let lastFetchTime = new Date(1970, 0, 1);
 
-const create = async (req, {title, contentShort})=>{
-    //const destroyed = Post.destroy({where: {}});
-    const post = await Post.create({title: title, contentShort: contentShort, author: 'server'});
+const create = async (req, {title, contentShort, author, content})=>{
+    const post = await Post.create({title: title, contentShort: contentShort, author: author, content: content});
     return post.dataValues;
 };
 
@@ -35,6 +34,8 @@ const mutations = {
     args: {
         title: { type: StringType },
         contentShort: { type: StringType },
+        author: { type: StringType },
+        content: { type: StringType },
     },
     resolve: create
 };

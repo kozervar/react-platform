@@ -7,56 +7,31 @@ const PostForm = (props) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label>First Name</label>
+                <label>Title</label>
                 <div>
-                    <Field name="firstName" component="input" type="text" placeholder="First Name"/>
+                    <Field name="title" component="input" type="text" placeholder="Title"/>
                 </div>
             </div>
             <div>
-                <label>Last Name</label>
+                <label>Author</label>
                 <div>
-                    <Field name="lastName" component="input" type="text" placeholder="Last Name"/>
+                    <Field name="author" component="input" type="text" placeholder="Author"/>
                 </div>
             </div>
             <div>
-                <label>Email</label>
+                <label>Short content</label>
                 <div>
-                    <Field name="email" component="input" type="email" placeholder="Email"/>
+                    <Field name="contentShort" component="input"/>
                 </div>
             </div>
             <div>
-                <label>Sex</label>
+                <label>Content</label>
                 <div>
-                    <label><Field name="sex" component="input" type="radio" value="male"/> Male</label>
-                    <label><Field name="sex" component="input" type="radio" value="female"/> Female</label>
+                    <Field name="content" component="textarea"/>
                 </div>
             </div>
             <div>
-                <label>Favorite Color</label>
-                <div>
-                    <Field name="favoriteColor" component="select">
-                        <option></option>
-                        <option value="ff0000">Red</option>
-                        <option value="00ff00">Green</option>
-                        <option value="0000ff">Blue</option>
-                    </Field>
-                </div>
-            </div>
-            <div>
-                <label htmlFor="employed">Employed</label>
-                <div>
-                    <Field name="employed" id="employed" component="input" type="checkbox"/>
-                </div>
-            </div>
-            <div>
-                <label>Notes</label>
-                <div>
-                    <Field name="notes" component="textarea"/>
-                </div>
-            </div>
-            <div>
-                <button type="submit" disabled={pristine || submitting}>Submit</button>
-                <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+                <button type="submit" disabled={pristine || submitting}>Save post</button>
             </div>
         </form>
     )

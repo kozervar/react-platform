@@ -28,21 +28,21 @@ export default {
       credentials: 'include',
     });
 
-    //const createResp = await fetch('/graphql', {
-    //  method: 'post',
-    //  headers: {
-    //    Accept: 'application/json',
-    //    'Content-Type': 'application/json',
-    //  },
-    //  body: JSON.stringify({
-    //    query: 'mutation Mutex { postMutations(title: "This is a todo mutation example", contentShort: "abcdf") }',
-    //  }),
-    //  credentials: 'include',
-    //});
-
     const { data } = await resp.json();
     if (!data || !data.posts) throw new Error('Failed to load the data.');
     return <Home posts={data.posts} />;
   },
 
 };
+
+/*    const createResp = await fetch('/graphql', {
+ method: 'post',
+ headers: {
+ Accept: 'application/json',
+ 'Content-Type': 'application/json',
+ },
+ body: JSON.stringify({
+ query: 'mutation Mutex { postMutations(title: "Tadam! This is a todo mutation example", contentShort: "abcdf") { title contentShort author content } }',
+ }),
+ credentials: 'include',
+ });*/
